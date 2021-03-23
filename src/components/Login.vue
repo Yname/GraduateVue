@@ -84,13 +84,8 @@ export default {
   },
   methods: {
     submitClick: function () {
-      // console.log("submit")
-      // alert("submit")
-      // alert(this.age)
-      //    alert(this.name)
 
       let _this = this
-
       if (this.code !== this.validCode){
          console.log("验证码不正确")
          this.titles = "验证码不正确";
@@ -98,18 +93,6 @@ export default {
       }
       this.$axios.post(
         '/api/login',
-        // 'http://localhost:9000/user/qry',
-        // this.$qs.stringify({ // 是将对象序列化为为URL形式进行以&进行拼接
-        //   name: this.name,
-        //   pwd: this.pwd,
-        //   phone: this.phone,
-        //   age: this.age
-        // })
-
-        // this.$qs.stringify({
-        //     userName:this.name,
-        //     password:this.pwd,
-        // })
         {
           params: {
             userName: this.name,
@@ -119,8 +102,6 @@ export default {
       ).then(function (resp) {
         console.log(resp)
         if (resp.status === 200) {
-          // _this.$cookie.set('rtn', resp.data.rtnMsg)
-
           if (resp.data.rtnCode !== '0') {
             _this.$router.push({
               name: 'Err',
@@ -129,13 +110,8 @@ export default {
               }
             })
           } else {
-
-            // let token = resp.data.obj
             let token = resp.data.obj.toString()
             _this.$cookie.set('token', token)
-            // let userStr = _this.$base64.decode(token.substring(token.indexOf('.') + 1, token.lastIndexOf('.'))).toString()
-            // let userJson = JSON.parse(userStr)
-            // _this.$cookie.set("role",userJson.role)
             _this.$cookie.set("user",_this.name)
             setTimeout(function (){_this.$router.go(0)},0)
             _this.$router.push({

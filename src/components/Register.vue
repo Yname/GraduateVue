@@ -103,7 +103,6 @@ export default {
           }
         }
       ).then(function (resp) {
-        console.log(resp)
         if (resp.status === 200) {
           if (resp.data.rtnCode !== '0') {
             _this.$router.push({
@@ -115,9 +114,6 @@ export default {
           } else {
             let token = resp.data.obj.toString()
             _this.$cookie.set('token', token)
-            // let userStr = _this.$base64.decode(token.substring(token.indexOf('.') + 1, token.lastIndexOf('.'))).toString()
-            // let userJson = JSON.parse(userStr)
-            // _this.$cookie.set("role",userJson.role)
             _this.$cookie.set("user",_this.name)
             setTimeout(function (){_this.$router.go(0)},0)
             _this.$router.push({
