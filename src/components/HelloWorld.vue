@@ -5,7 +5,7 @@
       <div class="col-md-8 col-md-offset-2" style="border-bottom: #61abaa 2px solid;height: 140px;padding-left: 0;padding-right: 0;">
 
         <div class="col-md-2" style="height: 139px;font-size: 30px;text-align: center;">
-          <div style="margin-top:25%;">图书网</div>
+          <div style="margin-top:25%;">校园图书网</div>
         </div>
         <div  class="col-md-8  peg" style="border-bottom: #61abaa 2px solid;height: 139px;">
           <div class="col-md-6 " style="margin-top: 4%;padding-right: 0;margin-left: 15%">
@@ -14,9 +14,9 @@
           <button v-on:click="searchBookMsg" class=" col-md-1 form-control btn-success " style="width:10%;margin-top:4%;height:40px;margin-left:0;">搜索</button>
         </div>
         <div class="col-md-2" style="height: 139px;font-size: 30px;text-align: center;">
-          <div style="margin-top:25%;font-size: 14px;border: #61abaa 1px solid;color: #61abaa;height: 30px;width: 120px;cursor: pointer;padding-top: 5px;margin-left: 30px;">
+          <button v-on:click="searchMybook" style="margin-top:25%;font-size: 14px;border: #61abaa 1px solid;color: #61abaa;height: 30px;width: 120px;cursor: pointer;padding-top: 5px;margin-left: 30px;">
             我的图书
-          </div>
+          </button>
         </div>
       </div>
 
@@ -33,19 +33,46 @@
       <div v-on:click="cartoonClick('com')" class="col-md-12 glyphicon-book" style="background: antiquewhite;height: 45px;font-size: 18px;text-align: left;padding-top: 10px;padding-left:30px;border: aliceblue 1px solid;cursor:pointer" >计算机读物</div>
       <div v-on:click="cartoonClick('oth')" class="col-md-12 glyphicon-book" style="background: antiquewhite;height: 45px;font-size: 18px;text-align: left;padding-top: 10px;padding-left:30px;border: aliceblue 1px solid;cursor:pointer" >其他读物</div>
     </div>
-    <div class="col-md-7" style="border: black 1px solid;display: block;height: 720px;">
-        <div class="col-md-12" style="border: black 1px solid;height: 100%">
-          <div class="col-md-3" style="border: 1px solid black; height: 30%; width: 25%;"></div>
-          <div class="col-md-3 col-md-offset-1" style="border: 1px solid black; height: 30%; width: 25%;"></div>
-          <div class="col-md-3 col-md-offset-1" style="border: 1px solid black; height: 30%; width: 25%;"></div>
+    <div class="col-md-7" style="display: block;height: 720px;">
+        <div class="col-md-12" style="height: 100%">
+          <div class="col-md-3" style="  height: 30%; width: 25%;">
+            <div class="col-md-8 photo123" style="height: 142px;width: 106px;margin-top: 30px;display: block;cursor: pointer"></div>
+            <div class="col-md-6" style="margin-top: 60px;font-size: 18px;cursor: pointer">闽都记</div>
+          </div>
+          <div class="col-md-3 col-md-offset-1" style="height: 30%; width: 25%;">
+            <div class="col-md-8 photo123" style="height: 142px;width: 106px;margin-top: 30px;display: block;cursor: pointer"></div>
+            <div class="col-md-6" style="margin-top: 60px;font-size: 18px;cursor: pointer">闽都记</div>
+          </div>
+          <div class="col-md-3 col-md-offset-1" style=" height: 30%; width: 25%;">
+            <div class="col-md-8 photo123" style="height: 142px;width: 106px;margin-top: 30px;display: block;cursor: pointer"></div>
+            <div class="col-md-6" style="margin-top: 60px;font-size: 18px;cursor: pointer">闽都记</div>
+          </div>
 
-          <div class="col-md-3" style="border: 1px solid black; height: 30%; width: 25%;margin-top:2%"></div>
-          <div class="col-md-3 col-md-offset-1" style="border: 1px solid black; height: 30%; width: 25%;margin-top:2%"></div>
-          <div class="col-md-3 col-md-offset-1" style="border: 1px solid black; height: 30%; width: 25%;margin-top:2%"></div>
+          <div class="col-md-3" style=" height: 30%; width: 25%;margin-top:2%">
+            <div class="col-md-8 photo123" style="height: 142px;width: 106px;margin-top: 30px;display: block;cursor: pointer"></div>
+            <div class="col-md-6" style="margin-top: 60px;font-size: 18px;cursor: pointer">闽都记</div>
+          </div>
+          <div class="col-md-3 col-md-offset-1" style=" height: 30%; width: 25%;margin-top:2%">
+            <div class="col-md-8 photo123" style="height: 142px;width: 106px;margin-top: 30px;display: block;cursor: pointer"></div>
+            <div class="col-md-6" style="margin-top: 60px;font-size: 18px;cursor: pointer">闽都记</div>
+          </div>
+          <div class="col-md-3 col-md-offset-1" style=" height: 30%; width: 25%;margin-top:2%">
+            <div class="col-md-8 photo123" style="height: 142px;width: 106px;margin-top: 30px;display: block;cursor: pointer"></div>
+            <div class="col-md-6" style="margin-top: 60px;font-size: 18px;cursor: pointer">闽都记</div>
+          </div>
 
-          <div class="col-md-3" style="border: 1px solid black; height: 30%; width: 25%;margin-top:2%"></div>
-          <div class="col-md-3 col-md-offset-1" style="border: 1px solid black; height: 30%; width: 25%;margin-top:2%"></div>
-          <div class="col-md-3 col-md-offset-1" style="border: 1px solid black; height: 30%; width: 25%;margin-top:2%"></div>
+          <div class="col-md-3" style=" height: 30%; width: 25%;margin-top:2%">
+            <div class="col-md-8 photo123" style="height: 142px;width: 106px;margin-top: 30px;display: block;cursor: pointer"></div>
+            <div class="col-md-6" style="margin-top: 60px;font-size: 18px;cursor: pointer">闽都记</div>
+          </div>
+          <div class="col-md-3 col-md-offset-1" style=" height: 30%; width: 25%;margin-top:2%">
+            <div class="col-md-8 photo123" style="height: 142px;width: 106px;margin-top: 30px;display: block;cursor: pointer"></div>
+            <div class="col-md-6" style="margin-top: 60px;font-size: 18px;cursor: pointer">闽都记</div>
+          </div>
+          <div class="col-md-3 col-md-offset-1" style=" height: 30%; width: 25%;margin-top:2%">
+            <div class="col-md-8 photo123" style="height: 142px;width: 106px;margin-top: 30px;display: block;cursor: pointer"></div>
+            <div class="col-md-6" style="margin-top: 60px;font-size: 18px;cursor: pointer">闽都记</div>
+          </div>
         </div>
     </div>
   </div>
@@ -83,9 +110,9 @@ export default {
             let data = resp.data.obj.records
             console.log(data)
             _this.$router.push({
-              name: 'Succ',
+              name: 'ClassList',
               params:{
-                rtnMsg:data
+                records:data
               }
             })
           } else {
@@ -109,6 +136,13 @@ export default {
           clazz:clazz,
         }
       })
+    },
+    searchMybook(){
+      let token = this.$cookie.get("token")
+      if (token === null || token === undefined)
+        alert("请登录！")
+        return;
+
     }
   }
 }
@@ -118,6 +152,9 @@ export default {
 <style scoped>
   .peg{
     background-image: url("../assets/7.png");
+  }
+  .photo123{
+    background-image: url('../assets/123.jpg');
   }
   .air{
     background-image: url("../assets/air_1.jpg");

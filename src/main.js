@@ -14,6 +14,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+
 library.add(faUserSecret)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -21,6 +22,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 // eslint-disable-next-line no-unused-vars
 import 'jquery/src/jquery'
 import 'bootstrap3/dist/css/bootstrap.min.css'
+import 'bootstrap-table/src/bootstrap-table'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
