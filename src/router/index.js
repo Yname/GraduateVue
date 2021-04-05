@@ -6,6 +6,7 @@ import Err from '@/components/Err'
 import Succ from '@/components/Succ'
 import Register from '../components/Register'
 import ClassList from '../components/ClassList'
+import Mybook from '../components/mybook'
 
 Vue.use(Router)
 
@@ -39,6 +40,11 @@ export default new Router({
       path: '/classList',
       name: 'ClassList',
       component: ClassList
+    },
+    {
+      path: '/Mybook',
+      name: 'Mybook',
+      component: Mybook
     }
   ]
 })

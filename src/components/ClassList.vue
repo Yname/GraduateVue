@@ -61,6 +61,7 @@ export default {
           if (resp.data.rtnCode === '0') {
             // console.log(resp.data)
             _this.records = resp.data.obj.records
+            console.log(_this.records)
             $('#table').bootstrapTable({
               data:_this.records ,  //表格数据
               columns: [
@@ -115,12 +116,42 @@ export default {
       })
     },
     clickBorrow:function (val){
+      let _this = this
       let token = this.$cookie.get("token")
-      if (token === null || token === undefined )
+      if (token === null || token === undefined ) {
         alert("请登录！");
         return;
-
+      }
+      console.log(val)
       let row = this.$qs.parse(val)
+      console.log(row)
+
+      this.$axios({
+        url:"/api/addMybook",
+        method:"post",
+        data:{params:{
+            userName:_this.$cookie.get("user"),
+            book:row,
+          }},
+        headers:{'Authorization':_this.$cookie.get("token")}
+
+      }).then(function (resp) {
+        console.log(resp)
+        if (resp.status === 200) {
+          if (resp.data.rtnCode !== '0') {
+            _this.$router.push({
+              name: 'Err',
+              params: {
+                'rtnmsg': resp.data.RtnMsg
+              }
+            })
+          } else {
+            console.log(resp)
+          }
+        } else {
+          console.log('not  200 了')
+        }
+      })
 
     },
     clickDetails(){

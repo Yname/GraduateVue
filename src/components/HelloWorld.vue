@@ -137,11 +137,46 @@ export default {
         }
       })
     },
-    searchMybook(){
+    searchMybook() {
+      let _this = this
       let token = this.$cookie.get("token")
-      if (token === null || token === undefined)
+      if (token === null || token === undefined) {
         alert("请登录！")
         return;
+      }
+
+      console.log(_this.$cookie.get("token"))
+      this.$axios({
+
+
+        url:"/api/searchMybook",
+        method:"post",
+        data:{params:{
+          userName:_this.$cookie.get("user"),
+        }},
+        headers:{'Authorization':_this.$cookie.get("token")}
+
+        }).then(function (resp) {
+
+        if (resp.status === 200) {
+          if (resp.data.rtnCode !== '0') {
+
+          } else {
+            let books = resp.data.obj
+            console.log(books)
+            _this.$router.push({
+              name: 'Mybook',
+              params: {
+                'records': books
+              }
+            })
+          }
+        } else {
+          console.log('not  200 了')
+        }
+      })
+
+
 
     }
   }

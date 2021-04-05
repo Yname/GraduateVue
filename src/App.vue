@@ -48,35 +48,41 @@ export default {
   methods:{
     loginOut(){
 
-      let _this = this
-      let userName = this.$qs.stringify({
-        userName:this.$cookie.get("user")
-      })
-      this.$axios(
-        {
-          method:"POST",
-          url:'/api/loginOut',
-          headers:{
-            "Authorization":_this.$cookie.get("token"),
-          },
-          data:{
-              userName,
-          },
-        }
-      ).then(function (resp) {
-        console.log(resp)
-        if (resp.status === 200) {
-          if (resp.data.rtnCode !== '0') {
-          } else {
-            _this.$cookie.set("token",'');
-            _this.$cookie.set("user",'');
-            _this.isActive = false;
-            _this.noActive = true;
-          }
-        } else {
-          console.log('not  200 了')
-        }
-      })
+
+      this.$cookie.set("token",'');
+      this.$cookie.set("user",'');
+      this.isActive = false;
+      this.noActive = true;
+
+      // let _this = this
+      // let userName = this.$qs.stringify({
+      //   userName:this.$cookie.get("user")
+      // })
+      // this.$axios(
+      //   {
+      //     method:"POST",
+      //     url:'/api/loginOut',
+      //     headers:{
+      //       "Authorization":_this.$cookie.get("token"),
+      //     },
+      //     data:{
+      //         userName,
+      //     },
+      //   }
+      // ).then(function (resp) {
+      //   console.log(resp)
+      //   if (resp.status === 200) {
+      //     if (resp.data.rtnCode !== '0') {
+      //     } else {
+      //       _this.$cookie.set("token",'');
+      //       _this.$cookie.set("user",'');
+      //       _this.isActive = false;
+      //       _this.noActive = true;
+      //     }
+      //   } else {
+      //     console.log('not  200 了')
+      //   }
+      // })
 
       // this.isActive = false;
       // this.noActive = true;

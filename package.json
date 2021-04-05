@@ -20,6 +20,7 @@
     "axios": "^0.21.1",
     "base-64": "^1.0.0",
     "base64-js": "^1.5.1",
+    "bootstrap-table": "^1.18.3",
     "bootstrap3": "^3.3.5",
     "cityjson-vue-components": "^0.3.3",
     "jquery": "^3.5.1",
