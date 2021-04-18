@@ -111,9 +111,24 @@ export default {
             })
           } else {
             let token = resp.data.obj.toString()
+
+
+
             _this.$cookie.set('token', token)
-            _this.$cookie.set("user",_this.name)
-            setTimeout(function (){_this.$router.go(0)},0)
+            _this.$cookie.set('user', _this.name)
+
+            let roles = token.toString()
+            let role = roles.substring(roles.indexOf('.') + 1, roles.lastIndexOf('.'))
+            let a = _this.$base64.decode(role)
+            a = a.toString()
+            let b; //role
+            if (a.indexOf("authority") !== -1)
+              b = a.substring(a.indexOf("authority")+12,a.indexOf("}")-1)
+
+            _this.$cookie.set('role', b)
+            setTimeout(function () {
+              _this.$router.go(0)
+            }, 0)
             _this.$router.push({
               name: 'Succ',
               params: {

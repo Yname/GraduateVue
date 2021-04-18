@@ -7,7 +7,7 @@ import Succ from '@/components/Succ'
 import Register from '../components/Register'
 import ClassList from '../components/ClassList'
 import Mybook from '../components/mybook'
-
+import Admin from '../components/Admin'
 Vue.use(Router)
 
 export default new Router({
@@ -45,6 +45,11 @@ export default new Router({
       path: '/Mybook',
       name: 'Mybook',
       component: Mybook
+    },
+    {
+      path: '/Admin',
+      name: 'Admin',
+      component: Admin
     }
   ]
 })

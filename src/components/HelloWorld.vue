@@ -160,7 +160,7 @@ export default {
 
         if (resp.status === 200) {
           if (resp.data.rtnCode !== '0') {
-
+            console.log(resp)
           } else {
             let books = resp.data.obj
             console.log(books)

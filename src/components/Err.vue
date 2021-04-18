@@ -11,7 +11,7 @@ export default{
     name:'Err',
     data(){
         return{
-            Msg:this.$cookie.get("rtn")
+            Msg:this.$route.params.Msg
         }
     }
 }
