@@ -17,6 +17,9 @@
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
+          <li v-bind:class="{ 'hidden' : noActive}"><a href="http://localhost:8080/#/Succ">
+            <button v-on:click="" class="btn-sm btn-success"><span class=""></span>我的信息</button>
+          </a></li>
           <li v-bind:class="{ 'hidden' : noActive}"><a href="http://localhost:8080/#/">
             <button v-on:click="loginOut" class="btn-sm btn-success"><span class="glyphicon glyphicon-log-in"></span>注销</button>
           </a></li>
@@ -34,7 +37,6 @@
     <router-view/>
   </div>
 </template>
-
 <script>
 
 
@@ -47,7 +49,6 @@ export default {
       glActive:true,
       token:'',
     }
-
   },
   methods:{
     loginOut(){

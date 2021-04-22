@@ -1,5 +1,5 @@
 <template>
-  <div id="#classList">
+  <div id="classList">
 
    <div class="col-md-12" style="height: 650px">
 <!--     <div class="col-md-2" style="border: #61abaa 1px solid;height: 100%">-->
@@ -53,7 +53,8 @@ export default {
           params:{
             classify:clazz,
             page:1,
-            total:10
+            total:10,
+            num:1,
           }
         }
       ).then(function (resp) {
@@ -101,7 +102,8 @@ export default {
               ] //表格列数据
 
             })
-            // $('.bootstrap4 .loading-wrap').removeClass()
+
+            $('#classList .fixed-table-loading').remove()
           } else {
             _this.$router.push({
               name: 'Err',

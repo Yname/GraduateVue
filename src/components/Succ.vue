@@ -16,8 +16,33 @@ export default{
             Msg:''
         }
     },
+  methods:{
+      selectUser(){
+        let _this = this
+        this.$axios({
+          url:"/api/selectUserByName",
+          method:"post",
+          data:{params:{
+              userName:_this.$cookie.get("user"),
+            }},
+          headers:{'Authorization':_this.$cookie.get("token")}
+        }).then(function (resp) {
+          if (resp.status === 200) {
+            if (resp.data.rtnCode !== '0') {
+
+            } else {
+              let data = resp.data.obj
+              console.log(data)
+
+            }
+          } else {
+            console.log('not  200 了')
+          }
+        });
+      }
+  },
   beforeMount () {
-    this.Msg = this.$route.params.rtnMsg
+    this.selectUser()
   }
 
 }

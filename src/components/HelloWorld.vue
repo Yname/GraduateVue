@@ -108,7 +108,7 @@ export default {
           _this.$cookie.set('rtn', resp.data.RtnMsg)
           if (resp.data.rtnCode === '0') {
             let data = resp.data.obj.records
-            console.log(data)
+            // console.log(data)
             _this.$router.push({
               name: 'ClassList',
               params:{
@@ -145,36 +145,42 @@ export default {
         return;
       }
 
-      console.log(_this.$cookie.get("token"))
-      this.$axios({
 
-
-        url:"/api/searchMybook",
-        method:"post",
-        data:{params:{
-          userName:_this.$cookie.get("user"),
-        }},
-        headers:{'Authorization':_this.$cookie.get("token")}
-
-        }).then(function (resp) {
-
-        if (resp.status === 200) {
-          if (resp.data.rtnCode !== '0') {
-            console.log(resp)
-          } else {
-            let books = resp.data.obj
-            console.log(books)
-            _this.$router.push({
-              name: 'Mybook',
-              params: {
-                'records': books
-              }
-            })
-          }
-        } else {
-          console.log('not  200 了')
-        }
+      _this.$router.push({
+        name: 'Mybook',
+        // params: {
+        //   'records': books
+        // }
       })
+
+      // this.$axios({
+      //   url:"/api/searchMybook",
+      //   method:"post",
+      //   data:{params:{
+      //     userName:_this.$cookie.get("user"),
+      //   }},
+      //   headers:{'Authorization':_this.$cookie.get("token")}
+      //
+      //   }).then(function (resp) {
+      //
+      //   if (resp.status === 200) {
+      //     if (resp.data.rtnCode !== '0') {
+      //       console.log(resp)
+      //     } else {
+      //       let books = resp.data.obj.records
+      //       console.log(books)
+      //
+      //       _this.$router.push({
+      //         name: 'Mybook',
+      //         params: {
+      //           'records': books
+      //         }
+      //       })
+      //     }
+      //   } else {
+      //     console.log('not  200 了')
+      //   }
+      // })
 
 
 
