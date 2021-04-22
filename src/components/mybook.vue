@@ -62,12 +62,14 @@ export default {
           if (resp.data.rtnCode !== '0') {
             console.log(resp)
           } else {
+            console.log(resp)
             let books = resp.data.obj.records
             console.log(books)
-            if (books.records.length === 0){
-              alter("该用户暂未借阅图书")
-              return
-            }
+
+            // if (books.records === null || books.records === undefined || books.records === ""){
+            //   alert("该用户暂未借阅图书")
+            //   return
+            // }
 
             $("#table").bootstrapTable('destroy');
             $("#table").bootstrapTable({
@@ -114,7 +116,7 @@ export default {
                   formatter:function(value, row, index){
                     let rows = _this.$qs.stringify(row)
                     //'"+rows+"'
-                    return  "<a onclick=\"clickBorrow( '"+rows+"' )\" href=\"#\">归还</a> ";
+                    return  "<a onclick=\"clickRemand( '"+rows+"' )\" href=\"#\">归还</a> ";
                   }
                 },
               ],
@@ -128,12 +130,17 @@ export default {
       })
 
 
-    }
+    },
+    clickRemand(){
+
+    },
   },
   beforeMount () {
     // this.records = this.$route.params.records
     // console.log(this.records )
-    this.start()
+    let _this = this
+    window.clickRemand = _this.clickRemand
+    _this.start()
   }
 }
 </script>
