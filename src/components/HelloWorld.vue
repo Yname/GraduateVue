@@ -20,7 +20,6 @@
         </div>
       </div>
 
-
     </div>
     <div class="col-md-1 col-lg-offset-2" style="width: 10%;padding: 0 0 0 8px;">
       <div v-on:click="cartoonClick('cat')" class="col-md-12 glyphicon-book" style="background: antiquewhite;height: 45px;font-size: 18px;text-align: left;padding-top: 10px;padding-left:30px;border: aliceblue 1px solid;cursor:pointer" >儿童读物</div>
@@ -84,23 +83,24 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      searchMsg:'',
+      searchMsg: ''
     }
   },
-  methods:{
-    searchBookMsg(){
-      if (this.searchMsg === ''){
+  methods: {
+    searchBookMsg () {
+      if (this.searchMsg === '') {
         return
       }
+      // eslint-disable-next-line no-unused-vars
       let msg = this.searchMsg
       let _this = this
       this.$axios.get(
         '/api/searchBook',
         {
-          params:{
-            bookName:_this.searchMsg,
-            page:1,
-            total:10
+          params: {
+            bookName: _this.searchMsg,
+            page: 1,
+            total: 10
           }
         }
       ).then(function (resp) {
@@ -111,8 +111,8 @@ export default {
             // console.log(data)
             _this.$router.push({
               name: 'ClassList',
-              params:{
-                records:data
+              params: {
+                records: data
               }
             })
           } else {
@@ -127,27 +127,25 @@ export default {
           console.log('not  200 了')
         }
       })
-
     },
-    cartoonClick(clazz){
+    cartoonClick (clazz) {
       this.$router.push({
-        name:"ClassList",
-        params:{
-          clazz:clazz,
+        name: 'ClassList',
+        params: {
+          clazz: clazz
         }
       })
     },
-    searchMybook() {
+    searchMybook () {
       let _this = this
-      let token = this.$cookie.get("token")
+      let token = this.$cookie.get('token')
       if (token === null || token === undefined) {
-        alert("请登录！")
-        return;
+        alert('请登录！')
+        return
       }
 
-
       _this.$router.push({
-        name: 'Mybook',
+        name: 'Mybook'
         // params: {
         //   'records': books
         // }
@@ -181,9 +179,6 @@ export default {
       //     console.log('not  200 了')
       //   }
       // })
-
-
-
     }
   }
 }

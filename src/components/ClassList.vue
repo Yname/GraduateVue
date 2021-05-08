@@ -24,10 +24,7 @@
 <!--         </tr>-->
 <!--       </table>-->
 
-
-
 <!--    <childName></childName>-->
-
 
      </div>
    </div>
@@ -38,23 +35,23 @@
 <script>
 export default {
   name: 'ClassList',
-  data(){
-    return{
-      clazz:'',
-      records:'',
+  data () {
+    return {
+      clazz: '',
+      records: ''
     }
   },
-  methods:{
-    selectClazz(clazz){
+  methods: {
+    selectClazz (clazz) {
       let _this = this
       this.$axios.get(
         '/api/searchBook',
         {
-          params:{
-            classify:clazz,
-            page:1,
-            total:10,
-            num:1,
+          params: {
+            classify: clazz,
+            page: 1,
+            total: 10,
+            num: 1
           }
         }
       ).then(function (resp) {
@@ -64,42 +61,43 @@ export default {
             _this.records = resp.data.obj.records
             console.log(_this.records)
             $('#table').bootstrapTable({
-              data:_this.records ,  //表格数据
+              data: _this.records, // 表格数据
               columns: [
                 {
-                  field:'bookName',
-                  title:'书名'
+                  field: 'bookName',
+                  title: '书名'
                 },
                 {
-                  field:'bookWriter',
-                  title:'作者'
+                  field: 'bookWriter',
+                  title: '作者'
                 },
                 {
-                  field:'bookWriter',
-                  title:'作者'
+                  field: 'bookWriter',
+                  title: '作者'
                 },
                 {
-                  field:'bookPublisher',
-                  title:'出版商'
+                  field: 'bookPublisher',
+                  title: '出版商'
                 },
                 {
-                  field:'classify',
-                  title:'归类'
+                  field: 'classify',
+                  title: '归类'
                 },
                 {
-                  field:'bookWriter',
-                  title:'剩余数量'
+                  field: 'bookWriter',
+                  title: '剩余数量'
                 },
                 {
-                  field:'',
-                  title:'操作',
-                  formatter:function(value, row, index){
+                  field: '',
+                  title: '操作',
+                  formatter: function (value, row, index) {
                     let rows = _this.$qs.stringify(row)
-                    //'"+rows+"'
-                    return  "<a onclick=\"clickBorrow( '"+rows+"' )\" href=\"#\">借阅</a> <a onclick=\"clickDetails('"+rows+"')\" style=\"padding-right: 10px;\" href=\"#\">查看详情</a>";
+                    // '"+rows+"'
+
+                    return "<a onclick=\"clickBorrow( '" + rows + "' )\" href=\"#\">借阅</a> "
                   }
-                },
-              ] //表格列数据
+                }
+              ] // 表格列数据
 
             })
 
@@ -117,25 +115,27 @@ export default {
         }
       })
     },
-    clickBorrow:function (val){
+    clickBorrow: function (val) {
       let _this = this
-      let token = this.$cookie.get("token")
-      if (token === null || token === undefined ) {
-        alert("请登录！");
-        return;
+      let token = this.$cookie.get('token')
+      if (token === null || token === undefined) {
+        alert('请登录！')
+        // return
+
+        window.location.reload()
       }
       console.log(val)
       let row = this.$qs.parse(val)
       console.log(row)
 
       this.$axios({
-        url:"/api/addMybook",
-        method:"post",
-        data:{params:{
-            userName:_this.$cookie.get("user"),
-            book:row,
-          }},
-        headers:{'Authorization':_this.$cookie.get("token")}
+        url: '/api/addMybook',
+        method: 'post',
+        data: {params: {
+          userName: _this.$cookie.get('user'),
+          book: row
+        }},
+        headers: {'Authorization': _this.$cookie.get('token')}
 
       }).then(function (resp) {
         console.log(resp)
@@ -153,27 +153,29 @@ export default {
         } else {
           console.log('not  200 了')
         }
+        alert("借阅成功")
+        _this.$router.go(0)
+        // _this.$router.push('/classList')
+        // _this.selectClazz(_this.clazz)
       })
-
     },
-    clickDetails(){
+    clickDetails () {
 
     }
   },
   beforeMount () {
     this.clazz = this.$route.params.clazz
     console.log(this.clazz)
-    if (this.clazz !== ''){
+    if (this.clazz !== '') {
       this.selectClazz(this.clazz)
     }
-
   },
   created () {
     let _this = this
     window.clickBorrow = _this.clickBorrow
     window.clickDetails = _this.clickDetails
   },
-  comments:{
+  comments: {
     childName: {
       template: '<a v-on:click="clickOne">查看</a>',
       data () {
@@ -187,7 +189,7 @@ export default {
 
         }
       }
-    },
+    }
   }
 }
 </script>

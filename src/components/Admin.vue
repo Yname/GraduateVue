@@ -18,10 +18,19 @@
 
         <div v-on:click="clickBook2User" class="col-md-10 " style="background: antiquewhite;height: 45px;font-size: 18px;text-align: left;margin-top:35px;padding-top: 10px;padding-left:30px;border: aliceblue 1px solid;cursor:pointer" >用户&图书</div>
 
+        <div v-on:click="ruku" class="col-md-10 " style="background: antiquewhite;height: 45px;font-size: 18px;text-align: left;margin-top:35px;padding-top: 10px;padding-left:30px;border: aliceblue 1px solid;cursor:pointer" >图书入库</div>
 
       </div>
 
       <div class="col-md-6 col-lg-offset-2" style="margin-bottom: 12px;border: aliceblue 1px solid;height:800px;">
+        <div v-if="isForm">
+            <span>书籍名称:</span><input type="text" v-model="bookName"><br>
+            <span>书籍作者:</span><input type="text" v-model="bookWriter"><br>
+            <span>出版商:</span><input type="text" v-model="bookPublisher"><br>
+            <span>书籍归类:</span><input type="text" v-model="classify"><br>
+          <button type="submit" style="" @click="insertBook"> 提交</button>
+
+        </div>
         <table id="userOrBook"></table>
 <!--        {{this.bok}}-->
       </div>
@@ -34,89 +43,94 @@
 <script>
 export default {
   name: 'Admin',
-  data(){
-    return{
-      msg:this.$cookie.get("user"),
-      bok:'',
+  data () {
+    return {
+      msg: this.$cookie.get('user'),
+      bok: '',
+      isForm: false,
+      bookName: '',
+      bookWriter: '',
+      bookPublisher: '',
+      classify: ''
     }
-
   },
   created () {
     let _this = this
     window.adminClickUser = _this.adminClickUser
+    window.chuku = _this.chuku
   },
   beforeMount () {
-    let role = this.$cookie.get("role")
-    if (role === null || role === '' || role === undefined || role.toString().indexOf("admin") === -1){
+    let role = this.$cookie.get('role')
+    if (role === null || role === '' || role === undefined || role.toString().indexOf('admin') === -1) {
       this.$router.push({
         name: 'Err',
         params: {
-          'Msg': "404未知错误"
+          'Msg': '404未知错误'
         }
       })
-      return;
     }
   },
-  methods:{
-    clickUser(){
+  methods: {
+    clickUser () {
+      this.isForm = false
+
       let _this = this
       // this.$axios.post(
       //   '/api/selectUser',
 
-        this.$axios({
+      this.$axios({
 
-          url: "/api/selectUser",
-          method: "post",
-          headers: {'Authorization': _this.$cookie.get("token")}
+        url: '/api/selectUser',
+        method: 'post',
+        headers: {'Authorization': _this.$cookie.get('token')}
 
-        }).then(function (resp) {
+      }).then(function (resp) {
         if (resp.status === 200) {
           if (resp.data.rtnCode === '0') {
             console.log(resp.data)
             _this.records = resp.data.obj.records
             console.log(_this.records)
-            $('#userOrBook').bootstrapTable('destroy');
+            $('#userOrBook').bootstrapTable('destroy')
             $('#userOrBook').bootstrapTable({
-              data:_this.records ,  //表格数据
+              data: _this.records, // 表格数据
               columns: [
                 {
-                  field:'userId',
-                  title:'用户编号'
+                  field: 'userId',
+                  title: '用户编号'
                 },
                 {
-                  field:'userName',
-                  title:'用户姓名'
+                  field: 'userName',
+                  title: '用户姓名'
                 },
                 {
-                  field:'userPhone',
-                  title:'用户电话'
+                  field: 'userPhone',
+                  title: '用户电话'
                 },
                 {
-                  field:'userAuth',
-                  title:'用户权限',
-                  formatter:function(value, row, index){
-                    if (value === null || value === ""){
-                      return "无"
-                    }else
-                      return value
+                  field: 'userAuth',
+                  title: '用户权限',
+                  formatter: function (value, row, index) {
+                    if (value === null || value === '') {
+                      return '无'
+                    } else { return value }
                   }
                 },
                 {
-                  field:'userOperate',
-                  title:'用户权限路径'
-                },
-                {
-                  field:'',
-                  title:'操作',
-                  formatter:function(value, row, index){
-                    // let rows = _this.$qs.stringify(row)
-                    //'"+rows+"'
-                    return  "<a onclick=\"adminClickUser('"+row.userName+"')\" style=\"padding-right: 10px;\" href=\"#\">查看详情</a>";
-                  }
-                },
-              ] //表格列数据
+                  field: 'userOperate',
+                  title: '用户权限路径'
+                }
+                // {
+                //   field: '',
+                //   title: '操作',
+                //   formatter: function (value, row, index) {
+                //     // let rows = _this.$qs.stringify(row)
+                //     // '"+rows+"'
+                //     return "<a onclick=\"adminClickUser('" + row.userName + "')\" style=\"padding-right: 10px;\" href=\"#\">查看详情</a>"
+                //   }
+                // }
+              ] // 表格列数据
             })
-            $("#Admin .fixed-table-loading ").remove()
+            $('#Admin .fixed-table-loading ').remove()
             // $('.bootstrap4 .loading-wrap').removeClass()
           } else {
             _this.$router.push({
@@ -130,62 +144,61 @@ export default {
           console.log('not  200 了')
         }
       })
-
     },
-    clickBook(){
+    clickBook () {
       let _this = this
+      this.isForm = false
+
       // this.$axios.post(
       //   '/api/selectUser',
-
 
       this.$axios.get(
         '/api/searchBook',
         {
-          params:{
-            page:1,
-            total:10,
+          params: {
+            page: 1,
+            total: 10
             // num:0,
           }
         }
-    ).then(function (resp) {
+      ).then(function (resp) {
         if (resp.status === 200) {
           if (resp.data.rtnCode === '0') {
             console.log(resp.data)
             _this.records = resp.data.obj.records
             console.log(_this.records)
-            $('#userOrBook').bootstrapTable('destroy');
+            $('#userOrBook').bootstrapTable('destroy')
             $('#userOrBook').bootstrapTable({
-              data:_this.records ,  //表格数据
+              data: _this.records, // 表格数据
               columns: [
                 {
-                  field:'bookId',
-                  title:'书籍编号'
+                  field: 'bookId',
+                  title: '书籍编号'
                 },
                 {
-                  field:'bookName',
-                  title:'书籍名称'
+                  field: 'bookName',
+                  title: '书籍名称'
                 },
 
                 {
-                  field:'bookWriter',
-                  title:'书籍作者'
+                  field: 'bookWriter',
+                  title: '书籍作者'
                 },
                 {
-                  field:'bookPublisher',
-                  title:'出版商'
+                  field: 'bookPublisher',
+                  title: '出版商'
                 },
                 {
-                  field:'classify',
-                  title:'书籍归类'
+                  field: 'classify',
+                  title: '书籍归类'
                 },
                 {
-                  field:'bookNum',
-                  title:'是否借出',
-                  formatter:function(value, row, index) {
-                    if (value.toString() === "1"){
-                      return "未借出"
-                    }else
-                      return "已借出"
+                  field: 'bookNum',
+                  title: '是否借出',
+                  formatter: function (value, row, index) {
+                    if (value.toString() === '1') {
+                      return '未借出'
+                    } else { return '已借出' }
                   }
                 },
                 // {
@@ -193,18 +206,19 @@ export default {
                 //   title:'借阅超时',
                 // },
                 {
-                  field:'',
-                  title:'操作',
-                  formatter:function(value, row, index){
+                  field: '',
+                  title: '操作',
+                  formatter: function (value, row, index) {
+                    // eslint-disable-next-line no-unused-vars
                     let rows = _this.$qs.stringify(row)
-                    //'"+rows+"'
-                    return  "<a onclick=\"clickDetails('"+rows+"')\" style=\"padding-right: 10px;\" href=\"#\">查看详情</a>";
+                    // '"+rows+"'
+                    return "<a onclick=\"chuku('" + row.bookId + "')\" style=\"padding-right: 10px;\" href=\"#\">出库</a>"
                   }
-                },
-              ] //表格列数据
+                }
+              ] // 表格列数据
 
             })
-            $("#Admin .fixed-table-loading ").remove()
+            $('#Admin .fixed-table-loading ').remove()
             // $('.bootstrap4 .loading-wrap').removeClass()
           } else {
             _this.$router.push({
@@ -218,17 +232,18 @@ export default {
           console.log('not  200 了')
         }
       })
-
     },
-    clickBook2User(){
+    clickBook2User () {
       let _this = this
+      this.isForm = false
+
       // this.$axios.post(
       //   '/api/selectUser',
       this.$axios({
-          url: "/api/selectBook2User",
-          method: "post",
-          headers: {'Authorization': _this.$cookie.get("token")}
-        }
+        url: '/api/selectBook2User',
+        method: 'post',
+        headers: {'Authorization': _this.$cookie.get('token')}
+      }
       ).then(function (resp) {
         if (resp.status === 200) {
           if (resp.data.rtnCode === '0') {
@@ -237,51 +252,49 @@ export default {
             _this.records = resp.data.obj.records
             console.log(_this.records)
 
-            $('#userOrBook').bootstrapTable('destroy');
+            $('#userOrBook').bootstrapTable('destroy')
             $('#userOrBook').bootstrapTable({
-              data:_this.records ,  //表格数据
+              data: _this.records, // 表格数据
               columns: [
                 {
-                  field:'userName',
-                  title:'用户名'
+                  field: 'userName',
+                  title: '用户名'
                 },
                 {
-                  field:'book.bookName',
-                  title:'书籍名称'
+                  field: 'book.bookName',
+                  title: '书籍名称'
                 },
 
                 {
-                  field:'book.bookWriter',
-                  title:'书籍作者'
+                  field: 'book.bookWriter',
+                  title: '书籍作者'
                 },
                 {
-                  field:'book.bookPublisher',
-                  title:'书籍出版商'
+                  field: 'book.bookPublisher',
+                  title: '书籍出版商'
                 },
                 {
-                  field:'book.classify',
-                  title:'书籍归类'
+                  field: 'book.classify',
+                  title: '书籍归类'
                 },
                 {
-                  field:'book.bookNum',
-                  title:'是否借出',
-                  formatter:function(value, row, index) {
-                    if (value.toString() === "1"){
-                      return "未借出"
-                    }else
-                      return "已借出"
+                  field: 'book.bookNum',
+                  title: '是否借出',
+                  formatter: function (value, row, index) {
+                    if (value.toString() === '1') {
+                      return '未借出'
+                    } else { return '已借出' }
                   }
                 },
                 {
-                  field:'book.bookExpire',
-                  title:'借阅超时',
-                  formatter:function(value, row, index) {
-                    if (value.toString() === "0"){
-                      return "未超时"
-                    }else
-                      return "已超时"
+                  field: 'book.bookExpire',
+                  title: '借阅超时',
+                  formatter: function (value, row, index) {
+                    if (value.toString() === '0') {
+                      return '未超时'
+                    } else { return '已超时' }
                   }
-                },
+                }
                 // {
                 //   field:'',
                 //   title:'操作',
@@ -291,10 +304,10 @@ export default {
                 //     return  "<a onclick=\"clickDetails('"+rows+"')\" style=\"padding-right: 10px;\" href=\"#\">查看详情</a>";
                 //   }
                 // },
-              ] //表格列数据
+              ] // 表格列数据
 
             })
-            $("#Admin .fixed-table-loading ").remove()
+            $('#Admin .fixed-table-loading ').remove()
             // $('.bootstrap4 .loading-wrap').removeClass()
           } else {
             _this.$router.push({
@@ -308,17 +321,53 @@ export default {
           console.log('not  200 了')
         }
       })
-
     },
-    adminClickUser(userName){
+    ruku () {
+      $('#userOrBook').bootstrapTable('destroy')
+      this.isForm = true
+    },
+    chuku: function (row) {
       let _this = this
       this.$axios({
-        url:"/api/searchMybook",
-        method:"post",
-        data:{params:{
-            userName:userName,
-          }},
-        headers:{'Authorization':_this.$cookie.get("token")}
+        url: '/api/deleteBook',
+        method: 'post',
+        data: {params: {
+          bookId: row
+        }},
+        headers: {'Authorization': _this.$cookie.get('token')}
+      }).then(function () {
+        alert('出库成功')
+        _this.clickBook()
+      })
+    },
+    insertBook () {
+      let _this = this
+      this.$axios({
+        url: '/api/insertBook',
+        method: 'post',
+        data: {params: {
+          bookName: _this.bookName,
+          bookWriter: _this.bookWriter,
+          bookPublisher: _this.bookPublisher,
+          classify: _this.classify
+        }},
+        headers: {'Authorization': _this.$cookie.get('token')}
+      }).then(function () {
+        alert('入库成功')
+      })
+    },
+
+
+
+    adminClickUser (userName) {
+      let _this = this
+      this.$axios({
+        url: '/api/searchMybook',
+        method: 'post',
+        data: {params: {
+          userName: userName
+        }},
+        headers: {'Authorization': _this.$cookie.get('token')}
       }).then(function (resp) {
         if (resp.status === 200) {
           if (resp.data.rtnCode !== '0') {
@@ -332,46 +381,42 @@ export default {
             //     'records': books
             //   }
             // })
-            $('#userOrBook').bootstrapTable('destroy');
+            $('#userOrBook').bootstrapTable('destroy')
             $('#userOrBook').bootstrapTable({
-              data:books.records ,  //表格数据
+              data: books.records, // 表格数据
               columns: [
                 {
-                  field:'bookId',
-                  title:'书籍编号'
+                  field: 'bookId',
+                  title: '书籍编号'
                 },
                 {
-                  field:'bookName',
-                  title:'书籍名称'
+                  field: 'bookName',
+                  title: '书籍名称'
                 },
 
                 {
-                  field:'bookWriter',
-                  title:'书籍作者'
+                  field: 'bookWriter',
+                  title: '书籍作者'
                 },
                 {
-                  field:'bookPublisher',
-                  title:'出版商'
+                  field: 'bookPublisher',
+                  title: '出版商'
                 },
                 {
-                  field:'classify',
-                  title:'书籍归类'
+                  field: 'classify',
+                  title: '书籍归类'
                 },
                 {
-                  field:'bookExpire',
-                  title:'是否逾期',
-                  formatter:function(value, row, index){
-                    if (value === "0")
-                      return "未逾期"
-                    else
-                      return "已逾期"
+                  field: 'bookExpire',
+                  title: '是否逾期',
+                  formatter: function (value, row, index) {
+                    if (value === '0') { return '未逾期' } else { return '已逾期' }
                   }
-                },
+                }
 
-              ] //表格列数据
+              ] // 表格列数据
             })
-            $("#Admin .fixed-table-loading ").remove()
-
+            $('#Admin .fixed-table-loading ').remove()
           }
         } else {
           console.log('not  200 了')

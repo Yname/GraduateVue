@@ -77,18 +77,17 @@ export default {
       pwd: '',
       phone: '',
       address: '',
-      validCode:'',
-      code:'',
-      titles:'',
+      validCode: '',
+      code: '',
+      titles: ''
     }
   },
   methods: {
     submitClick: function () {
-
       let _this = this
-      if (this.code !== this.validCode){
-         console.log("验证码不正确")
-         this.titles = "验证码不正确";
+      if (this.code !== this.validCode) {
+        console.log('验证码不正确')
+        this.titles = '验证码不正确'
         return
       }
       this.$axios.post(
@@ -96,7 +95,7 @@ export default {
         {
           params: {
             userName: this.name,
-            password: this.pwd,
+            password: this.pwd
           }
         }
       ).then(function (resp) {
@@ -112,8 +111,6 @@ export default {
           } else {
             let token = resp.data.obj.toString()
 
-
-
             _this.$cookie.set('token', token)
             _this.$cookie.set('user', _this.name)
 
@@ -121,9 +118,8 @@ export default {
             let role = roles.substring(roles.indexOf('.') + 1, roles.lastIndexOf('.'))
             let a = _this.$base64.decode(role)
             a = a.toString()
-            let b; //role
-            if (a.indexOf("authority") !== -1)
-              b = a.substring(a.indexOf("authority")+12,a.indexOf("}")-1)
+            let b // role
+            if (a.indexOf('authority') !== -1) { b = a.substring(a.indexOf('authority') + 12, a.indexOf('}') - 1) }
 
             _this.$cookie.set('role', b)
             setTimeout(function () {
@@ -181,28 +177,24 @@ export default {
       console.log(this.$children[0]._data.classObject.active)
       this.$children[0]._data.classObject.active = false
     },
-    validCodes(){
-      this.titles = "";
-      this.code = '';
-      let codeValidateImg = "";
-      let codeLength = 4;//验证码的长度
-      let random = ["0","1","2","3","4","5","6","7","8","9","A",'B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
-        'S','T','U','V','W','X','Y','Z'];//随机数
-      for(var i = 0; i < codeLength; i++) {//循环操作
-
-        let num = (Math.random()*1000/10).toFixed(0)
-        if (num < 0){
+    validCodes () {
+      this.titles = ''
+      this.code = ''
+      let codeValidateImg = ''
+      let codeLength = 4// 验证码的长度
+      let random = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+        'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']// 随机数
+      for (var i = 0; i < codeLength; i++) { // 循环操作
+        let num = (Math.random() * 1000 / 10).toFixed(0)
+        if (num < 0) {
           num = 0
-        }else if (num > 36){
+        } else if (num > 36) {
           num = 35
         }
         codeValidateImg += random[num]
       }
       this.validCode = codeValidateImg
     }
-
-
-
 
   },
   components: {
@@ -227,7 +219,7 @@ export default {
   },
   created () {
     this.validCodes()
-  },
+  }
 
 }
 </script>

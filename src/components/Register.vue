@@ -58,29 +58,29 @@
 
 export default {
   name: 'Register',
-  data(){
-    return{
+  data () {
+    return {
       name: '',
       pwd: '',
       phone: '',
-      validCode:'',
-      code:'',
-      titles:'',
+      validCode: '',
+      code: '',
+      titles: ''
     }
   },
-  methods:{
-    valid(){
-      this.titles = "";
-      this.code = '';
-      let codeValidateImg = "";
-      let codeLength = 4;//验证码的长度
-      let random = ["0","1","2","3","4","5","6","7","8","9","A",'B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
-        'S','T','U','V','W','X','Y','Z'];//随机数
-      for(var i = 0; i < codeLength; i++) {//循环操作
-        let num = (Math.random()*1000/10).toFixed(0)
-        if (num < 0){
+  methods: {
+    valid () {
+      this.titles = ''
+      this.code = ''
+      let codeValidateImg = ''
+      let codeLength = 4// 验证码的长度
+      let random = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+        'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']// 随机数
+      for (var i = 0; i < codeLength; i++) { // 循环操作
+        let num = (Math.random() * 1000 / 10).toFixed(0)
+        if (num < 0) {
           num = 0
-        }else if (num > 36){
+        } else if (num > 36) {
           num = 35
         }
         codeValidateImg += random[num]
@@ -89,8 +89,8 @@ export default {
     },
     submitClick: function () {
       let _this = this
-      if (this.code !== this.validCode){
-        this.titles = "验证码不正确";
+      if (this.code !== this.validCode) {
+        this.titles = '验证码不正确'
         return
       }
       this.$axios.post(
@@ -99,7 +99,7 @@ export default {
           params: {
             userName: this.name,
             password: this.pwd,
-            phone:this.phone,
+            phone: this.phone
           }
         }
       ).then(function (resp) {
@@ -114,8 +114,8 @@ export default {
           } else {
             let token = resp.data.obj.toString()
             _this.$cookie.set('token', token)
-            _this.$cookie.set("user",_this.name)
-            setTimeout(function (){_this.$router.go(0)},0)
+            _this.$cookie.set('user', _this.name)
+            setTimeout(function () { _this.$router.go(0) }, 0)
             _this.$router.push({
               name: 'Succ',
               params: {
@@ -127,7 +127,7 @@ export default {
           console.log('not  200 了')
         }
       })
-    },
+    }
   },
   created () {
     this.valid()
