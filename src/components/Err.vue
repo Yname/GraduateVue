@@ -8,11 +8,11 @@
 
 <script>
 export default{
-    name:'Err',
-    data(){
-        return{
-            Msg:this.$route.params.Msg
-        }
+  name: 'Err',
+  data () {
+    return {
+      Msg: this.$route.params.Msg
     }
+  }
 }
 </script>

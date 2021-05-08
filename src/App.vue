@@ -9,12 +9,12 @@
           <a v-bind:class="{'hidden':glActive}" class="navbar-brand" href="http://localhost:8080/#/Admin">
             <button class="btn-danger btn-sm" style="width:80px;">管理员</button>
           </a>
-          <a class="navbar-brand" href="http://localhost:8080/#/">
-            <button class="btn-default btn-sm" style="width:80px;">每日推荐</button>
-          </a>
-          <a class="navbar-brand" href="http://localhost:8080/#/">
-            <button class="btn-default btn-sm" style="width:80px;">其他</button>
-          </a>
+<!--          <a class="navbar-brand" href="http://localhost:8080/#/">-->
+<!--            <button class="btn-default btn-sm" style="width:80px;">每日推荐</button>-->
+<!--          </a>-->
+<!--          <a class="navbar-brand" href="http://localhost:8080/#/">-->
+<!--            <button class="btn-default btn-sm" style="width:80px;">其他</button>-->
+<!--          </a>-->
         </div>
         <ul class="nav navbar-nav navbar-right">
           <li v-bind:class="{ 'hidden' : noActive}"><a href="http://localhost:8080/#/Succ">
@@ -39,26 +39,23 @@
 </template>
 <script>
 
-
 export default {
   name: 'App',
-  data(){
-    return{
-      isActive:true,
-      noActive:false,
-      glActive:true,
-      token:'',
+  data () {
+    return {
+      isActive: true,
+      noActive: false,
+      glActive: true,
+      token: ''
     }
   },
-  methods:{
-    loginOut(){
-
-
-      this.$cookie.set("token",'');
-      this.$cookie.set("user",'');
-      this.isActive = false;
-      this.noActive = true;
-      this.glActive=true;
+  methods: {
+    loginOut () {
+      this.$cookie.set('token', '')
+      this.$cookie.set('user', '')
+      this.isActive = false
+      this.noActive = true
+      this.glActive = true
       // let _this = this
       // let userName = this.$qs.stringify({
       //   userName:this.$cookie.get("user")
@@ -92,34 +89,34 @@ export default {
       // this.isActive = false;
       // this.noActive = true;
     },
-    listerToken(any){
-      let token;
-      if (any === undefined || any === null){
-        token = this.$cookie.get("token")
-        let roles = this.$cookie.get("role")
-        if (roles !== null && roles !== "") {
-          if (roles.toString().indexOf("admin") !== -1) {
-            this.glActive = false;
+    listerToken (any) {
+      let token
+      if (any === undefined || any === null) {
+        token = this.$cookie.get('token')
+        let roles = this.$cookie.get('role')
+        if (roles !== null && roles !== '') {
+          if (roles.toString().indexOf('admin') !== -1) {
+            this.glActive = false
           }
         }
         // let role = roles.substring(roles.indexOf("."),roles.lastIndexOf("."));
         // console.log(role)
-      }else {
+      } else {
         token = any
-        console.log("asdf==="+token)
+        console.log('asdf===' + token)
       }
 
-      if (token === undefined || token === "" || token === null){
+      if (token === undefined || token === '' || token === null) {
         console.log('asdf')
         this.isActive = false
         this.noActive = true
       }
-    },
+    }
 
   },
   created () {
     this.listerToken()
-  },
+  }
   // watch:{
   //   token(newN,oldN){
   //     this.isActive = true
